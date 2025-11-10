@@ -1,0 +1,208 @@
+{
+  "data": {
+    "datasets": [
+      {
+        "name": "hospital_operations_data",
+        "fields": [
+          {
+            "id": "Patient_ID",
+            "name": "Patient ID",
+            "type": "TEXT"
+          },
+          {
+            "id": "Gender",
+            "name": "Gender",
+            "type": "TEXT"
+          },
+          {
+            "id": "Age",
+            "name": "Age",
+            "type": "NUMBER"
+          },
+          {
+            "id": "Department",
+            "name": "Department",
+            "type": "TEXT"
+          },
+          {
+            "id": "Doctor",
+            "name": "Doctor",
+            "type": "TEXT"
+          },
+          {
+            "id": "Admission_Date",
+            "name": "Admission Date",
+            "type": "DATE"
+          },
+          {
+            "id": "Discharge_Date",
+            "name": "Discharge Date",
+            "type": "DATE"
+          },
+          {
+            "id": "Admission_Type",
+            "name": "Admission Type",
+            "type": "TEXT"
+          },
+          {
+            "id": "Total_Bill",
+            "name": "Total Bill",
+            "type": "NUMBER"
+          },
+          {
+            "id": "Payment_Method",
+            "name": "Payment Method",
+            "type": "TEXT"
+          },
+          {
+            "id": "Diagnosis",
+            "name": "Diagnosis",
+            "type": "TEXT"
+          },
+          {
+            "id": "Readmitted",
+            "name": "Readmitted",
+            "type": "TEXT"
+          },
+          {
+            "id": "Source",
+            "name": "Source",
+            "type": "TEXT"
+          },
+          {
+            "id": "Status",
+            "name": "Status",
+            "type": "TEXT"
+          }
+        ]
+      }
+    ]
+  },
+  "style": {
+    "colorPalette": {
+      "primary": "#2E86C1",
+      "secondary": "#58D68D",
+      "accent": "#F39C12",
+      "background": "#F4F6F7",
+      "text": "#1C2833"
+    },
+    "fonts": {
+      "title": "Roboto",
+      "body": "Open Sans"
+    },
+    "kpiCards": {
+      "metrics": [
+        {
+          "label": "Total Admissions",
+          "formula": "COUNT_DISTINCT(Patient_ID)"
+        },
+        {
+          "label": "Total Discharges",
+          "formula": "COUNT_IF(Status='Discharged')"
+        },
+        {
+          "label": "Bed Occupancy Rate",
+          "formula": "(COUNT(Bed_Number)/200)*100",
+          "suffix": "%"
+        },
+        {
+          "label": "Avg Length of Stay",
+          "formula": "AVG(DATE_DIFF(Discharge_Date, Admission_Date))",
+          "suffix": " days"
+        },
+        {
+          "label": "Total Revenue",
+          "formula": "SUM(Total_Bill)",
+          "prefix": "\u20b9"
+        }
+      ]
+    },
+    "charts": [
+      {
+        "type": "line",
+        "title": "Admissions vs Discharges Over Time",
+        "dimension": "Admission_Date",
+        "metrics": [
+          {
+            "name": "Admissions",
+            "formula": "COUNT(Patient_ID)"
+          },
+          {
+            "name": "Discharges",
+            "formula": "COUNT_IF(Status='Discharged')"
+          }
+        ]
+      },
+      {
+        "type": "bar",
+        "title": "Admissions by Department",
+        "dimension": "Department",
+        "metric": "COUNT(Patient_ID)"
+      },
+      {
+        "type": "bar",
+        "title": "Average Length of Stay by Department",
+        "dimension": "Department",
+        "metric": "AVG(DATE_DIFF(Discharge_Date, Admission_Date))"
+      },
+      {
+        "type": "pie",
+        "title": "Revenue by Payment Method",
+        "dimension": "Payment_Method",
+        "metric": "SUM(Total_Bill)"
+      },
+      {
+        "type": "pie",
+        "title": "Patient Source Breakdown",
+        "dimension": "Source",
+        "metric": "COUNT(Patient_ID)"
+      },
+      {
+        "type": "table",
+        "title": "Top Diagnoses",
+        "dimensions": [
+          "Diagnosis"
+        ],
+        "metrics": [
+          "COUNT(Patient_ID)",
+          "AVG(Total_Bill)"
+        ]
+      }
+    ]
+  },
+  "layout": {
+    "sections": [
+      {
+        "title": "Hospital Overview KPIs",
+        "components": [
+          "kpiCards"
+        ]
+      },
+      {
+        "title": "Operational Trends",
+        "components": [
+          "line",
+          "bar"
+        ]
+      },
+      {
+        "title": "Financial Insights",
+        "components": [
+          "pie"
+        ]
+      },
+      {
+        "title": "Patient Demographics & Diagnoses",
+        "components": [
+          "table"
+        ]
+      }
+    ]
+  },
+  "info": {
+    "name": "Hospital Operations Dashboard",
+    "description": "A Looker Studio community visualization template for hospital performance tracking.",
+    "version": "1.0",
+    "author": "GPT-5 Assistant"
+  }
+}
